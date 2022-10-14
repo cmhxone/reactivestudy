@@ -2,9 +2,12 @@ package com.example.reactivestudy.model;
 
 import java.net.InetAddress;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
+import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -19,7 +22,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TUser {
+public class TUser implements Persistable<UUID> {
 
     @Id
     @NonNull
@@ -46,4 +49,19 @@ public class TUser {
 
     @NonNull
     private Integer userPoint;
+
+    @Override
+    @Nullable
+    public UUID getId() {
+        return this.uuid;
+    }
+
+    @Override
+    public boolean isNew() {
+
+        boolean result = Objects.isNull(this.uuid);
+        this.uuid = Objects.isNull(uuid) ? UUID.randomUUID() : this.uuid;
+        
+        return result;
+    }
 }
