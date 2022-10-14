@@ -2,6 +2,7 @@ package com.example.reactivestudy.web.controller;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,7 @@ public class AccountController {
 
         log.info("pUser.id={}, pUser.pw={}, pUser.name={}", pUser.getUserID(), pUser.getUserPassword(), pUser.getUserName());
 
-        if (pUser.getUserID() == null || pUser.getUserPassword() == null || pUser.getUserName() == null) {
+        if ( Objects.isNull(pUser.getUserID()) || Objects.isNull(pUser.getUserPassword()) || Objects.isNull(pUser.getUserName())) {
             return Mono.error(new Throwable("Empty args..."));
         }
 
